@@ -63,7 +63,7 @@ public class TransformService : MonoBehaviour, NetService
             }
             else if (!NetManager.Instance.IsHost) // The object was already destroyed
             {
-                NetManager.Instance.DeadNetIDs.Add(netID);
+                //NetManager.Instance.DeadNetIDs.Add(netID); // <-- This is already done in the NetObj script (should not be necessary here)
                 Debug.LogWarning("<color=red><b>ManaNet</b></color>: TransformService found object already destroyed with ID " + netID);
                 return;
             }
