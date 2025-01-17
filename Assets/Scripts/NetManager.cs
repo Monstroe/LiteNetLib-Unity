@@ -38,8 +38,8 @@ public class NetManager : MonoBehaviour
     public bool InRoom { get => RoomMembers != null && RoomMembers.Count > 0; }
     public Dictionary<int, NetService> NetServices { get; private set; }
     public Dictionary<int, NetObj> NetObjects { get; private set; }
-    //public List<GameObject> NetPrefabs { get => netPrefabs; }
     public Dictionary<string, NetObj> NetPrefabs { get => netPrefabs; }
+    public HashSet<int> DeadNetIDs { get; set; }
 
 
     [Header("Network Settings")]
@@ -48,7 +48,6 @@ public class NetManager : MonoBehaviour
     [SerializeField] private string connectionKey = "Bruh-Wizz-Arcgis";
 
     [Header("Network Objects")]
-    //[SerializeField] private List<GameObject> netPrefabs;
     [SerializedDictionary("Damage Type", "Description")]
     [SerializeField] private SerializedDictionary<string, NetObj> netPrefabs;
     [Space]
@@ -86,6 +85,7 @@ public class NetManager : MonoBehaviour
         NetObjects = new Dictionary<int, NetObj>();
         NetServices = new Dictionary<int, NetService>();
         RoomMembers = new List<NetMember>();
+        DeadNetIDs = new HashSet<int>();
         Reset();
 
         Debug.Log("<color=red><b>ManaNet</b></color>: NetManager initialized");
@@ -225,7 +225,7 @@ public class NetManager : MonoBehaviour
     public int GenerateNetID()
     {
         int id = UnityEngine.Random.Range(0, int.MaxValue);
-        if (NetObjects.ContainsKey(id))
+        if (NetObjects.ContainsKey(id) || DeadNetIDs.Contains(id))
         {
             Debug.LogError("<color=red><b>ManaNet</b></color>: Congratulations, you just hit a 1 in 2.1 billion chance. Generating new ID...");
             return GenerateNetID();

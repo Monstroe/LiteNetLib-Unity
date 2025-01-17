@@ -88,6 +88,7 @@ public class NetObj : MonoBehaviour
             // Send empty string for prefabID to indicate that the object should be destroyed (using -2 instead of -1 to avoid collisions with IndexOf method)
             SendTransformPacket(NetID, OwnerID, "", PosPivot.position, RotPivot.rotation, DeliveryMethod.ReliableOrdered);
             NetManager.Instance.NetObjects.Remove(NetID);
+            NetManager.Instance.DeadNetIDs.Add(NetID);
             Debug.Log("<color=red><b>ManaNet</b></color>: Object with ID " + NetID + " destroyed");
         }
     }

@@ -118,7 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19eee721f2c75a64cbb9e452b0c2e525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncRate: 10
+  syncRate: 60
+  interpolationSpeed: 30
   thisPrefabName: player
   posPivot: {fileID: 0}
   rotPivot: {fileID: 0}

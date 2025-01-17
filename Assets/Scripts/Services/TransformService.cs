@@ -63,6 +63,7 @@ public class TransformService : MonoBehaviour, NetService
             }
             else if (!NetManager.Instance.IsHost) // The object was already destroyed
             {
+                NetManager.Instance.DeadNetIDs.Add(netID);
                 Debug.LogWarning("<color=red><b>ManaNet</b></color>: TransformService found object already destroyed with ID " + netID);
                 return;
             }
@@ -86,10 +87,11 @@ public class TransformService : MonoBehaviour, NetService
         }
 
         // Object should be Destroyed (with the empty prefabName)
-        if (prefabName == "")
+        if (prefabName == "" || NetManager.Instance.DeadNetIDs.Contains(netID))
         {
             Debug.Log("<color=red><b>ManaNet</b></color>: TransformService found object to destroy with ID " + netID);
             NetManager.Instance.NetObjects.Remove(netID);
+            NetManager.Instance.DeadNetIDs.Add(netID);
             Destroy(syncedObj.gameObject);
             syncedObj = null;
             method = DeliveryMethod.ReliableOrdered;
